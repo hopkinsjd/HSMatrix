@@ -1,5 +1,7 @@
 package org.software.hopkins.matrix;
 
+import org.software.hopkins.matrix.future.MatrixTransposable;
+
 import java.util.List;
 
 /**
@@ -7,7 +9,8 @@ import java.util.List;
  * where m is the number of rows and n the number of columns.
  * (HS stands for Hopkins Software).
  */
-public interface HSMatrix extends MatrixSummable{
+public interface HSMatrix extends Cloneable, MatrixSummable,
+		MatrixSubtractable, MatrixTransposable {
 	/**
 	 * Get the number of rows in the matrix.
 	 * @return the number of rows
@@ -34,14 +37,14 @@ public interface HSMatrix extends MatrixSummable{
 	 * @param index of the desired row
 	 * @return the desired row
 	 */
-	List<Integer> getRow(int index);
+	List<Float> getRow(int index);
 
 	/**
 	 * Sets the row in the matrix with the given index to a given new row.
 	 * @param index of the row to set
 	 * @param newRow to use to set the row in the matrix with the given index
 	 */
-	void setRow(int index, List<Integer> newRow);
+	void setRow(int index, List<Float> newRow);
 
 	/**
 	 * Get the entry value at the given row and column.
@@ -49,21 +52,21 @@ public interface HSMatrix extends MatrixSummable{
 	 * @param column the entry's column index
 	 * @return the value of the entry
 	 */
-	Integer getEntry(int row, int column);
+	Float getEntry(int row, int column);
 
 	/**
 	 * Set the entry's value at the given row and column.
 	 * @param row the entry's row index
 	 * @param column the entry's column index
 	 */
-	void setEntry(int row, int column, Integer value);
+	void setEntry(int row, int column, Float value);
 
 	/**
 	 * Sets the values of the matrix to incremental values from the given start number.
 	 * @param start with this value at matrix[0][0] and increment subsequent values
 	 *              going from left to right and top to bottom.
 	 */
-	void setValuesIncrementedFrom(int start);
+	void setValuesIncrementedFrom(Float start);
 
 	/**
 	 * Indicates whether the given matrix is equal to this matrix.
@@ -79,6 +82,12 @@ public interface HSMatrix extends MatrixSummable{
 	 * Sets every value of the matrix to the given value.
 	 * @param value the value given with which to fill the matrix
 	 */
-	void fill(Integer value);
+	void fill(Float value);
+
+	/**
+	 * Make an independent copy of this matrix.
+	 * @return a deep copy of this matrix.
+	 */
+	public HSMatrix clone();
 
 }

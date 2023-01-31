@@ -20,9 +20,9 @@ public class Square2nMatrix extends SquareMatrix {
 	 * @param val2Col column of the second given value
 	 */
 	public void swapValues(int val1Row, int val1Col, int val2Row, int val2Col) {
-		int tmp;
-		List<Integer> row1 = matrix.get(val1Row);
-		List<Integer> row2 = matrix.get(val2Row);
+		float tmp;
+		List<Float> row1 = matrix.get(val1Row);
+		List<Float> row2 = matrix.get(val2Row);
 		tmp = row1.get(val1Col);
 		row1.set(val1Col, row2.get(val2Col));
 		row2.set(val2Col, tmp);
@@ -52,7 +52,7 @@ public class Square2nMatrix extends SquareMatrix {
 		int sum = 0;
 
 		if (rowIndex >= 0 && rowIndex < size) {
-			List<Integer> theRow = getRow(rowIndex);
+			List<Float> theRow = getRow(rowIndex);
 			for (int i = 0; i < size/2; ++i) {
 				sum += theRow.get(i);
 			}
@@ -65,7 +65,7 @@ public class Square2nMatrix extends SquareMatrix {
 		int sum = 0;
 
 		if (rowIndex >= 0 && rowIndex < size) {
-			List<Integer> theRow = getRow(rowIndex);
+			List<Float> theRow = getRow(rowIndex);
 			for (int i = size/2; i < size; ++i) {
 				sum += theRow.get(i);
 			}

@@ -25,12 +25,12 @@ public interface MatrixSummable {
 	 * @param rowIndex the given row's index
 	 * @return the sum of the given row.
 	 */
-	Integer sumRow(int rowIndex);
+	Float sumRow(int rowIndex);
 
 	/**
 	 * Get the sum of the given column of this matrix.
 	 * @param colIndex the given column's index
 	 * @return the sum of the given column
 	 */
-	Integer sumColumn(int colIndex);
+	Float sumColumn(int colIndex);
 }
