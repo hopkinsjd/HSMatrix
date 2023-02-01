@@ -1,6 +1,4 @@
-package org.software.hopkins.matrix.future;
-
-import org.software.hopkins.matrix.HSMatrix;
+package org.software.hopkins.matrix;
 
 public interface MatrixTransposable {
 	/**
@@ -10,7 +8,7 @@ public interface MatrixTransposable {
 	HSMatrix transpose();
 
 	/**
-	 * Inverts or transposes this matrix so that its columns and rows are interchanged
+	 * Inverts or transposes this matrix so that its columns and rows are interchanged.
 	 */
 	void invert();
 }

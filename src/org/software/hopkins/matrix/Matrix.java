@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Matrix implements HSMatrix {
-	protected List<List<Float>> matrix;
+	protected List<List<Float>> matrixImpl;
 	protected int rows, cols;
 
 	/**
@@ -22,17 +22,17 @@ public class Matrix implements HSMatrix {
 	public Matrix(int mRows, int nCols, Float fill) {
 		rows = mRows;
 		cols = nCols;
-		matrix = new ArrayList<>(mRows);
+		matrixImpl = new ArrayList<>(mRows);
 		for (int r = 0; r < mRows; ++r) {
-			matrix.add(new ArrayList<>(nCols));
+			matrixImpl.add(new ArrayList<>(nCols));
 			for (int c = 0; c < nCols; ++c) {
-				matrix.get(r).add(fill);
+				matrixImpl.get(r).add(fill);
 			}
 		}
 	}
 
 	public Matrix(List<List<Float>> entryMatrix) {
-		matrix = entryMatrix;
+		matrixImpl = entryMatrix;
 		rows = entryMatrix.size();
 		cols = entryMatrix.get(0).size();
 	}
@@ -48,7 +48,7 @@ public class Matrix implements HSMatrix {
 	public void setValuesIncrementedFrom(Float start) {
 		for (int r = 0; r < rows; ++r) {
 			for (int c = 0; c < cols; ++c) {
-				matrix.get(r).set(c, start++);
+				matrixImpl.get(r).set(c, start++);
 			}
 		}
 	}
@@ -99,7 +99,7 @@ public class Matrix implements HSMatrix {
 	 */
 	@Override
 	public final List<Float> getRow(int index) {
-		List<Float> theRow = matrix.get(index);
+		List<Float> theRow = matrixImpl.get(index);
 		return new ArrayList<>(theRow);
 	}
 
@@ -111,7 +111,7 @@ public class Matrix implements HSMatrix {
 	 */
 	@Override
 	public void setRow(int index, List<Float> newRow) {
-		matrix.set(index, newRow);
+		matrixImpl.set(index, newRow);
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class Matrix implements HSMatrix {
 	 */
 	@Override
 	public final Float getEntry(int row, int column) {
-		List<Float> theRow = matrix.get(row);
+		List<Float> theRow = matrixImpl.get(row);
 		return theRow.get(column);
 	}
 
@@ -135,7 +135,7 @@ public class Matrix implements HSMatrix {
 	 */
 	@Override
 	public void setEntry(int row, int column, Float value) {
-		List<Float> theRow = matrix.get(row);
+		List<Float> theRow = matrixImpl.get(row);
 		theRow.set(column, value);
 	}
 
@@ -155,7 +155,7 @@ public class Matrix implements HSMatrix {
 		if (sameOrder) {
 			isEqual = true;
 			for (int i = 0; i < rows; ++i) {
-				List<Float> thisCurRow = this.matrix.get(i);
+				List<Float> thisCurRow = this.matrixImpl.get(i);
 				List<Float> givenCurRow = matrix.getRow(i);
 				for (int j = 0; j < cols; j++) {
 					if (!thisCurRow.get(j).equals(givenCurRow.get(j))) {
@@ -175,7 +175,7 @@ public class Matrix implements HSMatrix {
 	 */
 	@Override
 	public void fill(Float value) {
-		for (List<Float> row : matrix) {
+		for (List<Float> row : matrixImpl) {
 			for (int c = 0; c < cols; c++) {
 				row.set(c, value);
 			}
@@ -187,11 +187,12 @@ public class Matrix implements HSMatrix {
 	 *
 	 * @return the string representing the matrix.
 	 */
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (int r = 0; r < rows; ++r) {
 			for (int c = 0; c < cols; ++c) {
-				sb.append(matrix.get(r).get(c));
+				sb.append(matrixImpl.get(r).get(c));
 				sb.append('\t');
 			}
 			sb.append('\n');
@@ -199,6 +200,11 @@ public class Matrix implements HSMatrix {
 		return sb.toString();
 	}
 
+	/**
+	 * Make an independent copy of this matrix.
+	 * @return a deep copy of this matrix.
+	 */
+	@Override
 	public HSMatrix clone() {
 		HSMatrix clonedMatrix = new Matrix(rows, cols);
 		for (int r = 0; r < rows; r++) {
@@ -206,14 +212,45 @@ public class Matrix implements HSMatrix {
 				clonedMatrix.setEntry(r, c, this.getEntry(r, c));
 			}
 		}
-
 		return clonedMatrix;
 	}
 
 	/**
-	 * MatrixSummable implementation
+	 * Set the values in the column with the given index for this matrix.
+	 * If the length of the values list is less than the matrix column,
+	 * the method sets as many of the values as it can up to the number of values.
+	 * If the length of the values list is greater than the matrix column.,
+	 * the method only sets the values that it can up to the number of rows.
+	 *
+	 * @param colIndex - the index of the column of this matrix to set.
+	 * @param values to assign this column.
 	 */
+	@Override
+	public void setColumn(int colIndex, List<Float> values) {
+		int indexLimit = values.size() < this.rowSize() ? values.size() : this.rowSize();
+		for (int r = 0; r < indexLimit; ++r) {
+			this.setEntry(r, colIndex, values.get(r));
+		}
+	}
 
+	/**
+	 * Get the list of values of the column of this matrix with the given index.
+	 *
+	 * @param colIndex - index of the column with the values to get.
+	 * @return the list of values for this column.
+	 */
+	@Override
+	public List<Float> getColumn(int colIndex) {
+		List<Float> column = new ArrayList<>(this.rowSize());
+		for (int r = 0; r < this.rowSize(); r++) {
+			column.add(this.getEntry(r, colIndex));
+		}
+		return column;
+	}
+
+	/*
+	  MatrixSummable Interface Implementation
+	 */
 
 	/**
 	 * If this matrix and the given matrix are of the same order (same number of rows and columns),
@@ -303,17 +340,16 @@ public class Matrix implements HSMatrix {
 		return sum;
 	}
 
-	/**
-	 * Scalable Matrix Interface Implementation
+	/*
+	  Scalable Matrix Interface Implementation
 	 */
 
 	/**
 	 * Multiply a copy of this matrix by the given scalar.
-	 * @param scalar
+	 * @param scalar - the number to multiply each element of the matrix by.
 	 * @return a copy of this HSMatrix with each element multiplied by the given scalar.
 	 *
 	 */
-
 	@Override
 	public HSMatrix times(Float scalar) {
 		HSMatrix matrixCopy = this.clone();
@@ -336,8 +372,8 @@ public class Matrix implements HSMatrix {
 		return this.times(-1.0f);
 	}
 
-	/**
-	 * Subtractable Matrix Interface Implementation
+	/*
+	  Subtractable Matrix Interface Implementation
 	 */
 
 	/**
@@ -355,8 +391,8 @@ public class Matrix implements HSMatrix {
 		this.add(matrix.negative());
 	}
 
-	/**
-	 * Transposable Matrix Interface Implementation
+	/*
+	  Transposable Matrix Interface Implementation
 	 */
 
 	/**
@@ -383,10 +419,10 @@ public class Matrix implements HSMatrix {
 		HSMatrix matrix1 = this.transpose();
 		rows = matrix1.rowSize();
 		cols = matrix1.columnSize();
-		matrix.clear();
+		matrixImpl.clear();
 		for (int r = 0; r < rows; r++) {
-			matrix.add(new ArrayList<>());
-			List<Float> row = matrix.get(r);
+			matrixImpl.add(new ArrayList<>());
+			List<Float> row = matrixImpl.get(r);
 			for (int c = 0; c < cols; c++) {
 				row.add(matrix1.getEntry(r, c));
 			}

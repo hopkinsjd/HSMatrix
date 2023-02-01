@@ -1,7 +1,5 @@
 package org.software.hopkins.matrix;
 
-import org.software.hopkins.matrix.future.MatrixTransposable;
-
 import java.util.List;
 
 /**
@@ -88,6 +86,25 @@ public interface HSMatrix extends Cloneable, MatrixSummable,
 	 * Make an independent copy of this matrix.
 	 * @return a deep copy of this matrix.
 	 */
-	public HSMatrix clone();
+	HSMatrix clone();
 
+	/**
+	 * Set the values in the column with the given index for this matrix.
+	 * If the length of the values list is less than the matrix column,
+	 * the method sets as many of the values as it can up to the number of values.
+	 * If the length of the values list is greater than the matrix column.,
+	 * the method only sets the values that it can up to the number of rows.
+	 *
+	 * @param colIndex - the index of the column of this matrix to set.
+	 * @param values to assign this column.
+	 */
+	void setColumn(int colIndex, List<Float> values);
+
+	/**
+	 * Get the list of values of the column of this matrix with the given index.
+	 *
+	 * @param colIndex - index of the column with the values to get.
+	 * @return the list of values for this column.
+	 */
+	List<Float> getColumn(int colIndex);
 }

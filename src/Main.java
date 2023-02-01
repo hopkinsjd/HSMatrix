@@ -60,12 +60,12 @@ public class Main {
 		System.out.println(matrix);
 
 		HSMatrix matrixA = new Matrix(ROWS, COLS);
-		matrixA.setRow(0, Arrays.asList(new Float[] {1.0f, 2.0f, 3.0f}));
-		matrixA.setRow(1, Arrays.asList(new Float[]{4.0f, -1.0f, -2.0f}));
+		matrixA.setRow(0, Arrays.asList(1.0f, 2.0f, 3.0f));
+		matrixA.setRow(1, Arrays.asList(4.0f, -1.0f, -2.0f));
 
 		HSMatrix matrixB = new Matrix(ROWS, COLS);
-		matrixB.setRow(0, Arrays.asList(new Float[]{-1.0f, 2.0f, -3.0f}));
-		matrixB.setRow(1, Arrays.asList(new Float[]{-2.0f, 0.0f, 1.0f}));
+		matrixB.setRow(0, Arrays.asList(-1.0f, 2.0f, -3.0f));
+		matrixB.setRow(1, Arrays.asList(-2.0f, 0.0f, 1.0f));
 
 		System.out.println("Matrix Sums\n");
 		System.out.println("Matrix A");
