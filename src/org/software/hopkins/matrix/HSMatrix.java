@@ -7,8 +7,8 @@ import java.util.List;
  * where m is the number of rows and n the number of columns.
  * (HS stands for Hopkins Software).
  */
-public interface HSMatrix extends Cloneable, MatrixSummable,
-		MatrixSubtractable, MatrixTransposable {
+public interface HSMatrix extends Cloneable, SummableMatrix,
+		SubtractableMatrix, TransposableMatrix {
 	/**
 	 * Get the number of rows in the matrix.
 	 * @return the number of rows

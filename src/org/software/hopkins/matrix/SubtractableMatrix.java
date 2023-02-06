@@ -1,6 +1,6 @@
 package org.software.hopkins.matrix;
 
-public interface MatrixSubtractable extends MatrixScalable, MatrixSummable {
+public interface SubtractableMatrix extends ScalableMatrix, SummableMatrix {
 	/**
 	 * Returns a copy of this matrix minus the given matrix.
 	 * @param matrix - a matrix of the same order as this one

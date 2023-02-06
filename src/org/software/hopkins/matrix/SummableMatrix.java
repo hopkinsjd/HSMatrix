@@ -1,6 +1,6 @@
 package org.software.hopkins.matrix;
 
-public interface MatrixSummable {
+public interface SummableMatrix {
 	/**
 	 *	If this matrix and the given matrix are of the same order (same number of rows and columns),
 	 *	returns a new matrix of the matrices two added together or null otherwise.

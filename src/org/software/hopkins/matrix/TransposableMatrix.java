@@ -1,6 +1,6 @@
 package org.software.hopkins.matrix;
 
-public interface MatrixTransposable {
+public interface TransposableMatrix {
 	/**
 	 * Returns a transposed/inverted copy of this matrix.
 	 * @return a transposed copy of this HSMatrix.

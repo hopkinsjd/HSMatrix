@@ -7,8 +7,8 @@ import java.util.List;
  * which are always even in size (twice the given initial size n).
  * This allows game operations which flip columns or rows.
  */
-public class Square2nMatrix extends SquareMatrix {
-	Square2nMatrix(int n) {
+public class Square2NMatrix extends SquareMatrix {
+	Square2NMatrix(int n) {
 		super(n);
 	}
 

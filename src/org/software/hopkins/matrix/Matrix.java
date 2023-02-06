@@ -249,7 +249,7 @@ public class Matrix implements HSMatrix {
 	}
 
 	/*
-	  MatrixSummable Interface Implementation
+	  SummableMatrix Interface Implementation
 	 */
 
 	/**

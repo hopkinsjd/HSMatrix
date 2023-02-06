@@ -1,7 +1,7 @@
 package org.software.hopkins.matrix;
 
 
-public interface MatrixScalable {
+public interface ScalableMatrix {
 	/**
 	 * Multiply a copy of this matrix by the given scalar.
 	 * @param scalar - a real number
