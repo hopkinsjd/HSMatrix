@@ -428,4 +428,50 @@ public class Matrix implements HSMatrix {
 			}
 		}
 	}
+
+	/**
+	 * Multiplies this mxn matrix A by the given nxp matrix B (A rows == B columns) and
+	 * produces a mxp product matrix C. Does not change this matrix.
+	 *
+	 * @param matrixB - a matrix with the same number of columns as this matrix has rows.
+	 * @return - the resulting product matrix.
+	 */
+	@Override
+	public HSMatrix times(HSMatrix matrixB) {
+		if (this.columnSize() != matrixB.rowSize()) {
+			throw new IllegalArgumentException("Can't multiply by given matrix. Its row size does not equal this matrix's column size.");
+		} else {
+			HSMatrix newMatrix = this.clone();
+			newMatrix.multiplyBy(matrixB);
+			return newMatrix;
+		}
+	}
+
+	/**
+	 * Multiplies this mxn matrix A by the given nxp matrix B (A rows == B columns) and
+	 * changing this matrix to a mxp product matrix C.
+	 *
+	 * @param matrixB - a matrix with the same number of columns as this matrix has rows.
+	 */
+	@Override
+	public void multiplyBy(HSMatrix matrixB) {
+		if (this.columnSize() != matrixB.rowSize()) {
+			throw new IllegalArgumentException("Can't multiply by given matrix. Its row size does not equal this matrix's column size.");
+		} else {
+			HSMatrix matrixA = this.clone();
+			rows = matrixA.rowSize();
+			cols = matrixB.columnSize();
+			matrixImpl.clear();
+			for (int i = 0; i < this.rowSize(); i++) {
+				matrixImpl.add(new ArrayList<>(this.columnSize()));
+				for (int j = 0; j < this.columnSize(); j++) {
+					float Cij = 0.0f;
+					for (int c = 0; c < matrixA.columnSize(); c++) {
+						Cij += matrixA.getEntry(i, c) * matrixB.getEntry(c, j);
+					}
+					matrixImpl.get(i).add(Cij);
+				}
+			}
+		}
+	}
 }
