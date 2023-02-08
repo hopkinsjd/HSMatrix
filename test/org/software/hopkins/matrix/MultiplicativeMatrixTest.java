@@ -2,7 +2,6 @@ package org.software.hopkins.matrix;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,38 +9,27 @@ class MultiplicativeMatrixTest {
 
 	@Test
 	void times() {
-		HSMatrix matrixA = new Matrix(1, 3);
-		matrixA.setRow(0, Arrays.asList(300.0f, 250.0f, 350.0f));
+		Float[][] arrayMatrixA = {{300.0f, 250.0f, 350.0f}};
+		HSMatrix matrixA = new Matrix(arrayMatrixA);
 
-		HSMatrix matrixB = new Matrix(3, 2);
-		matrixB.setRow(0, Arrays.asList(30.0f, 40.0f));
-		matrixB.setRow(1, Arrays.asList(20.0f, 25.0f));
-		matrixB.setRow(2, Arrays.asList(10.0f, 5.0f));
+		Float[][] arrayMatrixB = {{30.0f, 40.0f}, {20.0f, 25.0f}, {10.0f, 5.0f}};
+		HSMatrix matrixB = new Matrix(arrayMatrixB);
 
-		HSMatrix matrixC = new Matrix(1, 2);
-		matrixC.setRow(0, Arrays.asList(17500.0f, 20000.0f));
+		Float[][] arrayMatrixC = {{17500.0f, 20000.0f}};
+		HSMatrix matrixC = new Matrix(arrayMatrixC);
 
-		assertTrue(matrixA.times(matrixB).equals(matrixC));
 		assertFalse(matrixA.equals(matrixC));
 		assertFalse(matrixA.equals(matrixB));
+		assertTrue(matrixA.times(matrixB).equals(matrixC));
 	}
 
 	@Test
-	void multiplyBy() {
-		HSMatrix matrixA = new Matrix(1, 3);
-		matrixA.setRow(0, Arrays.asList(300.0f, 250.0f, 350.0f));
-
-		HSMatrix matrixB = new Matrix(3, 2);
-		matrixB.setRow(0, Arrays.asList(30.0f, 40.0f));
-		matrixB.setRow(1, Arrays.asList(20.0f, 25.0f));
-		matrixB.setRow(2, Arrays.asList(10.0f, 5.0f));
-
-		HSMatrix matrixC = new Matrix(1, 2);
-		matrixC.setRow(0, Arrays.asList(17500.0f, 20000.0f));
-
-		assertFalse(matrixA.equals(matrixC));
-		matrixA.multiplyBy(matrixB);
-		assertTrue(matrixA.equals(matrixC));
-
+	void scales() {
+		HSMatrix matrix = new Matrix(3, 3, 1.0f);
+		HSMatrix matrix1 = new Matrix(3, 3, 2.0f);
+		HSMatrix matrix2 = matrix.times(2.0f);
+		assertTrue(matrix2.equals(matrix1));
+		assertFalse(matrix2.equals(matrix));
 	}
+
 }

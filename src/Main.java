@@ -1,7 +1,9 @@
 import org.software.hopkins.matrix.HSMatrix;
+import org.software.hopkins.matrix.HSMutableMatrix;
 import org.software.hopkins.matrix.Matrix;
 import org.software.hopkins.matrix.MatrixCommand;
 import org.software.hopkins.matrix.MatrixOperation;
+import org.software.hopkins.matrix.MutableMatrix;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +13,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
-	private static HashMap<String, HSMatrix> matrixHashMap = new HashMap<>();
+	private static final HashMap<String, HSMatrix> matrixHashMap = new HashMap<>();
 
 	/**
 	 * Main method for a Matrix command-line calculator using HSMatrix.
@@ -114,7 +116,7 @@ public class Main {
 	 * @return an array of Strings, representing named matrices chosen by the user.
 	 */
 	private static String[] getOperandsFromUser(Scanner scanner) {
-		String[] operands = null;
+		String[] operands;
 		do {
 			System.out.println("Enter matrix operand name, names separated by spaces, or nothing to cancel: ");
 			String input = scanner.nextLine().trim().toUpperCase();
@@ -367,7 +369,7 @@ public class Main {
 	private static void demo() {
 		final int ROWS = 2;
 		final int COLS = 3;
-		HSMatrix matrix = new Matrix(ROWS, COLS);
+		HSMutableMatrix matrix = new MutableMatrix(ROWS, COLS);
 		System.out.println("Initial Matrix");
 		System.out.println(matrix);
 		matrix.fill(1.0f);
@@ -377,11 +379,11 @@ public class Main {
 		System.out.println("Filled with Incremental Values");
 		System.out.println(matrix);
 
-		HSMatrix matrixA = new Matrix(ROWS, COLS);
+		HSMutableMatrix matrixA = new MutableMatrix(ROWS, COLS);
 		matrixA.setRow(0, Arrays.asList(1.0f, 2.0f, 3.0f));
 		matrixA.setRow(1, Arrays.asList(4.0f, -1.0f, -2.0f));
 
-		HSMatrix matrixB = new Matrix(ROWS, COLS);
+		HSMutableMatrix matrixB = new MutableMatrix(ROWS, COLS);
 		matrixB.setRow(0, Arrays.asList(-1.0f, 2.0f, -3.0f));
 		matrixB.setRow(1, Arrays.asList(-2.0f, 0.0f, 1.0f));
 

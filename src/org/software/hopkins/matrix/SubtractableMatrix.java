@@ -1,6 +1,6 @@
 package org.software.hopkins.matrix;
 
-public interface SubtractableMatrix extends ScalableMatrix, SummableMatrix {
+public interface SubtractableMatrix extends SummableMatrix {
 	/**
 	 * Returns a copy of this matrix minus the given matrix.
 	 * @param matrix - a matrix of the same order as this one
@@ -9,8 +9,8 @@ public interface SubtractableMatrix extends ScalableMatrix, SummableMatrix {
 	HSMatrix minus(HSMatrix matrix);
 
 	/**
-	 * Subtract the given matrix from this matrix.
-	 * @param matrix - must be of the same order as this matrix
+	 * Returns the negative of this matrix.
+	 * @return a copy of this matrix, scaled by -1.0.
 	 */
-	void subtract(HSMatrix matrix);
+	HSMatrix negative();
 }

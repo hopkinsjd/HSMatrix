@@ -8,7 +8,7 @@ import java.util.List;
  * (HS stands for Hopkins Software).
  */
 public interface HSMatrix extends Cloneable, SummableMatrix,
-		SubtractableMatrix, TransposableMatrix, MultiplicativeMatrix {
+		SubtractableMatrix, MultiplicativeMatrix {
 	/**
 	 * Get the number of rows in the matrix.
 	 * @return the number of rows
@@ -38,11 +38,12 @@ public interface HSMatrix extends Cloneable, SummableMatrix,
 	List<Float> getRow(int index);
 
 	/**
-	 * Sets the row in the matrix with the given index to a given new row.
-	 * @param index of the row to set
-	 * @param newRow to use to set the row in the matrix with the given index
+	 * Get the list of values of the column of this matrix with the given index.
+	 *
+	 * @param colIndex - index of the column with the values to get.
+	 * @return the list of values for this column.
 	 */
-	void setRow(int index, List<Float> newRow);
+	List<Float> getColumn(int colIndex);
 
 	/**
 	 * Get the entry value at the given row and column.
@@ -51,20 +52,6 @@ public interface HSMatrix extends Cloneable, SummableMatrix,
 	 * @return the value of the entry
 	 */
 	Float getEntry(int row, int column);
-
-	/**
-	 * Set the entry's value at the given row and column.
-	 * @param row the entry's row index
-	 * @param column the entry's column index
-	 */
-	void setEntry(int row, int column, Float value);
-
-	/**
-	 * Sets the values of the matrix to incremental values from the given start number.
-	 * @param start with this value at matrix[0][0] and increment subsequent values
-	 *              going from left to right and top to bottom.
-	 */
-	void setValuesIncrementedFrom(Float start);
 
 	/**
 	 * Indicates whether the given matrix is equal to this matrix.
@@ -77,34 +64,14 @@ public interface HSMatrix extends Cloneable, SummableMatrix,
 	boolean equals (HSMatrix matrix);
 
 	/**
-	 * Sets every value of the matrix to the given value.
-	 * @param value the value given with which to fill the matrix
-	 */
-	void fill(Float value);
-
-	/**
 	 * Make an independent copy of this matrix.
 	 * @return a deep copy of this matrix.
 	 */
 	HSMatrix clone();
 
 	/**
-	 * Set the values in the column with the given index for this matrix.
-	 * If the length of the values list is less than the matrix column,
-	 * the method sets as many of the values as it can up to the number of values.
-	 * If the length of the values list is greater than the matrix column.,
-	 * the method only sets the values that it can up to the number of rows.
-	 *
-	 * @param colIndex - the index of the column of this matrix to set.
-	 * @param values to assign this column.
+	 * Returns a transposed/inverted copy of this matrix.
+	 * @return a transposed copy of this HSMatrix.
 	 */
-	void setColumn(int colIndex, List<Float> values);
-
-	/**
-	 * Get the list of values of the column of this matrix with the given index.
-	 *
-	 * @param colIndex - index of the column with the values to get.
-	 * @return the list of values for this column.
-	 */
-	List<Float> getColumn(int colIndex);
+	HSMatrix transpose();
 }
