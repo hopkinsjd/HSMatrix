@@ -3,7 +3,6 @@ package org.software.hopkins.matrix;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -83,13 +82,13 @@ class HSMutableMatrixTest {
 
 	@Test
 	void add() {
-		matrix.setRow(0, Arrays.asList(1.0f, 2.0f, 3.0f));
-		matrix.setRow(1, Arrays.asList(4.0f, -1.0f, -2.0f));
-		matrix1.setRow(0, Arrays.asList(-1.0f, 2.0f, -3.0f));
-		matrix1.setRow(1, Arrays.asList(-2.0f, 0.0f, 1.0f));
+		matrix.setRow(0, List.of(1.0f, 2.0f, 3.0f));
+		matrix.setRow(1, List.of(4.0f, -1.0f, -2.0f));
+		matrix1.setRow(0, List.of(-1.0f, 2.0f, -3.0f));
+		matrix1.setRow(1, List.of(-2.0f, 0.0f, 1.0f));
 		HSMutableMatrix matrix3 = new MutableMatrix(ROW_SIZE, COL_SIZE);
-		matrix3.setRow(0, Arrays.asList(0.0f, 4.0f, 0.0f));
-		matrix3.setRow(1, Arrays.asList(2.0f, -1.0f, -1.0f));
+		matrix3.setRow(0, List.of(0.0f, 4.0f, 0.0f));
+		matrix3.setRow(1, List.of(2.0f, -1.0f, -1.0f));
 		matrix.add(matrix1);
 		assertTrue(matrix.equals(matrix3));
 	}
@@ -99,7 +98,7 @@ class HSMutableMatrixTest {
 		HSMatrix matrix = new Matrix(3, 3);
 		HSMutableMatrix matrix1 = new MutableMatrix(3, 3);
 		matrix1.fill(1.0f);
-		assertTrue(!matrix.equals(matrix1));
+		assertFalse(matrix.equals(matrix1));
 		matrix1.subtract(matrix1);
 		assertTrue(matrix.equals(matrix1));
 	}
@@ -110,7 +109,7 @@ class HSMutableMatrixTest {
 		matrix.fill(1.0f);
 		HSMutableMatrix matrix1 = new MutableMatrix(3, 3);
 		matrix1.fill(3.0f);
-		assertTrue(!matrix.equals(matrix1));
+		assertFalse(matrix.equals(matrix1));
 		matrix.scaleBy(3.0f);
 		assertTrue(matrix.equals(matrix1));
 	}
@@ -118,15 +117,15 @@ class HSMutableMatrixTest {
 	@Test
 	void multiplyBy() {
 		HSMutableMatrix matrixA = new MutableMatrix(1, 3);
-		matrixA.setRow(0, Arrays.asList(300.0f, 250.0f, 350.0f));
+		matrixA.setRow(0, List.of(300.0f, 250.0f, 350.0f));
 
 		HSMutableMatrix matrixB = new MutableMatrix(3, 2);
-		matrixB.setRow(0, Arrays.asList(30.0f, 40.0f));
-		matrixB.setRow(1, Arrays.asList(20.0f, 25.0f));
-		matrixB.setRow(2, Arrays.asList(10.0f, 5.0f));
+		matrixB.setRow(0, List.of(30.0f, 40.0f));
+		matrixB.setRow(1, List.of(20.0f, 25.0f));
+		matrixB.setRow(2, List.of(10.0f, 5.0f));
 
 		HSMutableMatrix matrixC = new MutableMatrix(1, 2);
-		matrixC.setRow(0, Arrays.asList(17500.0f, 20000.0f));
+		matrixC.setRow(0, List.of(17500.0f, 20000.0f));
 
 		assertFalse(matrixA.equals(matrixC));
 		matrixA.multiplyBy(matrixB);
@@ -136,14 +135,14 @@ class HSMutableMatrixTest {
 	@Test
 	void invert() {
 		HSMutableMatrix matrixA = new MutableMatrix(3, 3);
-		matrixA.setRow(0, Arrays.asList(1.0f, 0.0f, 3.0f));
-		matrixA.setRow(1, Arrays.asList(3.0f, 4.0f, 2.0f));
-		matrixA.setRow(2, Arrays.asList(7.0f, 8.0f, 3.0f));
+		matrixA.setRow(0, List.of(1.0f, 0.0f, 3.0f));
+		matrixA.setRow(1, List.of(3.0f, 4.0f, 2.0f));
+		matrixA.setRow(2, List.of(7.0f, 8.0f, 3.0f));
 
 		HSMutableMatrix matrixB = new MutableMatrix(3, 3);
-		matrixB.setColumn(0, Arrays.asList(1.0f, 0.0f, 3.0f));
-		matrixB.setColumn(1, Arrays.asList(3.0f, 4.0f, 2.0f));
-		matrixB.setColumn(2, Arrays.asList(7.0f, 8.0f, 3.0f));
+		matrixB.setColumn(0, List.of(1.0f, 0.0f, 3.0f));
+		matrixB.setColumn(1, List.of(3.0f, 4.0f, 2.0f));
+		matrixB.setColumn(2, List.of(7.0f, 8.0f, 3.0f));
 
 		assertFalse(matrixA.equals(matrixB));
 		matrixA.invert();

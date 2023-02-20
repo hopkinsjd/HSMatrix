@@ -3,6 +3,7 @@ package org.software.hopkins.matrix;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,6 +19,33 @@ class MatrixTest {
 	@BeforeEach
 	void setUp() {
 
+	}
+
+	@Test
+	void constructors() {
+		HSMatrix zeroMatrix = new Matrix(ROW_SIZE, COL_SIZE);
+		HSMatrix zeroMatrix1 = new Matrix(ROW_SIZE, COL_SIZE, 0.0f);
+		HSMatrix zeroMatrix2 = new Matrix(ROW_SIZE, COL_SIZE, 0.0f, false);
+		List<List<Float>> zeroListMatrix = new ArrayList<>(ROW_SIZE);
+		for (int r = 0; r < ROW_SIZE; r++) {
+			List<Float> curRow = new ArrayList<>(COL_SIZE);
+			for (int c = 0; c < COL_SIZE; c++) {
+				curRow.add(0.0f);
+			}
+			zeroListMatrix.add(curRow);
+		}
+		HSMatrix zeroMatrix3 = new Matrix(zeroListMatrix);
+		Float[][] zeroArrayMatrix = new Float[ROW_SIZE][COL_SIZE];
+		for (int r = 0; r < ROW_SIZE; r++) {
+			for (int c = 0; c < COL_SIZE; c++) {
+				zeroArrayMatrix[r][c] = 0.0f;
+			}
+		}
+		HSMatrix zeroMatrix4 = new Matrix(zeroArrayMatrix);
+		assertTrue(zeroMatrix.equals(zeroMatrix1));
+		assertTrue(zeroMatrix1.equals(zeroMatrix2));
+		assertTrue(zeroMatrix2.equals(zeroMatrix3));
+		assertTrue(zeroMatrix3.equals(zeroMatrix4));
 	}
 
 	@Test
@@ -54,6 +82,7 @@ class MatrixTest {
 		List<Float> aRow = matrix.getRow(0);
 		assertEquals(COL_SIZE, aRow.size());
 		assertSame(aRow.get(2), matrix.getEntry(0, 2));
+		assertThrows(UnsupportedOperationException.class, () -> aRow.set(0, -1.0f));
 	}
 
 	@Test

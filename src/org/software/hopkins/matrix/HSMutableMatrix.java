@@ -61,7 +61,7 @@ public interface HSMutableMatrix extends HSMatrix {
 	 * Scale this matrix by the given scalar number.
 	 * @param scalar - a real number
 	 */
-	void scaleBy(Float scalar);
+	void scaleBy(float scalar);
 
 	/**
 	 * Multiplies this mxn matrix A by the given nxp matrix B (A rows == B columns) and

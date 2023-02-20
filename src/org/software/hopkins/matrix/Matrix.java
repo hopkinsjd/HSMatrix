@@ -1,6 +1,7 @@
 package org.software.hopkins.matrix;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Matrix implements HSMatrix {
@@ -44,7 +45,7 @@ public class Matrix implements HSMatrix {
 	}
 
 	public Matrix(List<List<Float>> entryMatrix) {
-		matrixImpl = entryMatrix;
+		matrixImpl = new ArrayList<>(entryMatrix);
 		rows = entryMatrix.size();
 		cols = entryMatrix.get(0).size();
 	}
@@ -94,20 +95,29 @@ public class Matrix implements HSMatrix {
 	}
 
 	/**
-	 * Get the row of the matrix with the given index.
-	 * Note that getting a row makes a copy of it
+	 * Get a copy of the row of the matrix with the given index.
+	 * Note that making a copy of it,
 	 * to avoid an encapsulation violation,
-	 * making it take O(n) time and O(n) space
+	 * takes O(n) time and O(n) space
 	 * where n equals the number of columns.
-	 * Use carefully only when needed.
 	 *
+	 * @param index of the desired row.
+	 * @return a mutable copy of the desired row.
+	 */
+	@Override
+	public List<Float> getRowCopy(int index) {
+		List<Float> theRow = matrixImpl.get(index); //= new ArrayList<>(columnSize()); //
+		return new ArrayList<>(theRow);
+	}
+
+	/**
+	 * Get the row of the matrix with the given index.
 	 * @param index of the desired row
-	 * @return the desired row
+	 * @return the desired row which is unmodifiable to preserve encapsulation.
 	 */
 	@Override
 	public final List<Float> getRow(int index) {
-		List<Float> theRow = matrixImpl.get(index);
-		return new ArrayList<>(theRow);
+		return Collections.unmodifiableList(matrixImpl.get(index));
 	}
 
 	/**
@@ -367,6 +377,4 @@ public class Matrix implements HSMatrix {
 			return new Matrix(productMatrix);
 		}
 	}
-
-
 }

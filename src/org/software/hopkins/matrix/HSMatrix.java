@@ -33,9 +33,17 @@ public interface HSMatrix extends Cloneable, SummableMatrix,
 	/**
 	 * Get the row in the matrix with the given index.
 	 * @param index of the desired row
-	 * @return the desired row
+	 * @return the desired row, which is unmodifiable.
 	 */
 	List<Float> getRow(int index);
+
+	/**
+	 * Gets a copy of the row of the matrix with the given index.
+	 *
+	 * @param index of the desired row
+	 * @return a copy of the desired row
+	 */
+	List<Float> getRowCopy(int index);
 
 	/**
 	 * Get the list of values of the column of this matrix with the given index.

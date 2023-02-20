@@ -66,8 +66,8 @@ public class MutableMatrix extends Matrix implements HSMutableMatrix {
 	 * @param newRow to use to set the row in the matrix with the given index
 	 */
 	@Override
-	public void setRow(int index, List<Float> newRow) {
-		matrixImpl.set(index, newRow);
+	public void setRow(int index, final List<Float> newRow) {
+		matrixImpl.set(index, new ArrayList<>(newRow));
 	}
 
 	/**
@@ -99,10 +99,10 @@ public class MutableMatrix extends Matrix implements HSMutableMatrix {
 	@Override
 	public void add(HSMatrix matrix) {
 		if (!isSameOrder(matrix))
-			throw new IllegalArgumentException("Cannot sum matrices. The given matrix is not the same order as this matrix.");
+			throw new IllegalArgumentException("Cannot add the given matrix. It is not the same order as this matrix.");
 		else {
 			for (int i = 0; i < rows; ++i) {
-				List<Float> thisCurRow = getRow(i);
+				List<Float> thisCurRow = getRowCopy(i);
 				List<Float> givenCurRow = matrix.getRow(i);
 				for (int j = 0; j < cols; ++j) {
 					thisCurRow.set(j, thisCurRow.get(j) + givenCurRow.get(j));
@@ -114,11 +114,22 @@ public class MutableMatrix extends Matrix implements HSMutableMatrix {
 
 	@Override
 	public void subtract(HSMatrix matrix) {
-		this.add(matrix.negative());
+		if (!isSameOrder(matrix))
+			throw new IllegalArgumentException("Cannot subtract the given matrix. It is not the same order as this matrix.");
+		else {
+			for (int i = 0; i < rows; ++i) {
+				List<Float> thisCurRow = getRowCopy(i);
+				List<Float> givenCurRow = matrix.getRow(i);
+				for (int j = 0; j < cols; ++j) {
+					thisCurRow.set(j, thisCurRow.get(j) - givenCurRow.get(j));
+				}
+				setRow(i, thisCurRow);
+			}
+		}
 	}
 
 	@Override
-	public void scaleBy(Float scalar) {
+	public void scaleBy(float scalar) {
 		for (int r = 0; r < rows; ++r) {
 			for (int c = 0; c < cols; ++c) {
 				Float element = this.getEntry(r, c);
